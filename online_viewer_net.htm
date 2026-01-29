@@ -5,77 +5,149 @@
     <title>Dashboard Kyrkhult</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; margin: 0; padding: 15px; height: 100vh; display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px; box-sizing: border-box; }
-        .card { background: #1e293b; border-radius: 20px; border: 1px solid #334155; padding: 15px; display: flex; flex-direction: column; }
-        .grid-right { display: flex; flex-direction: column; gap: 15px; }
-        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex-grow: 1; }
-        .status-on { border-color: #38bdf8; background: #0c4a6e; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
-        #plug-icon { font-size: 3rem; text-align: center; display: block; margin: 10px 0; }
-        h2 { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; text-align: center; margin: 0; }
-        iframe { width: 100%; height: 100%; border: none; border-radius: 15px; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0f172a; 
+            color: white; 
+            margin: 0; 
+            padding: 15px; 
+            height: 100vh; 
+            display: grid; 
+            grid-template-columns: 1.25fr 1fr; 
+            gap: 20px; 
+            box-sizing: border-box; 
+        }
+        .card { 
+            background: #1e293b; 
+            border-radius: 20px; 
+            border: 1px solid #334155; 
+            padding: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+        .grid-right { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+        .bottom-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            grid-template-rows: 1fr 1fr; 
+            gap: 15px; 
+            flex-grow: 1; 
+        }
+        h2 { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            color: #94a3b8; 
+            text-align: center; 
+            margin: 0 0 10px 0; 
+            letter-spacing: 1px;
+        }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            border-radius: 15px; 
+        }
+        #clock { 
+            font-size: 3.5rem; 
+            font-weight: bold; 
+            color: #38bdf8; 
+            line-height: 1;
+        }
+        #date { 
+            font-size: 1rem; 
+            color: #94a3b8; 
+            margin-top: 5px;
+        }
+        .centered {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card"><iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FAmsterdam&src=a2xlcGVsYWFyQGdtYWlsLmNvbQ&src=YW5rZWRlam9uZ2UxQGdtYWlsLmNvbQ&color=%23039BE5&color=%237986CB"></iframe></div>
+    <div class="card">
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%231e293b&ctz=Europe%2FAmsterdam&src=a2xlcGVsYWFyQGdtYWlsLmNvbQ&src=YW5rZWRlam9uZ2UxQGdtYWlsLmNvbQ&color=%23039BE5&color=%237986CB&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0"></iframe>
+    </div>
 
     <div class="grid-right">
-        <div class="card" style="height: 250px; background: white;"><iframe src="https://väder24.se/index.php/vader-widget/?widgettype=white&widgetcity=Kyrkhult"></iframe></div>
+        <div class="card" style="height: 250px; background: white; padding: 0;">
+            <iframe src="https://väder24.se/index.php/vader-widget/?widgettype=white&widgetcity=Kyrkhult"></iframe>
+        </div>
         
         <div class="bottom-grid">
-            <div class="card" style="justify-content: center; align-items: center; background: none; border: none;">
-                <div id="clock" style="font-size: 2.5rem; color: #38bdf8;">00:00</div>
-                <div id="date" style="font-size: 0.8rem; color: #94a3b8;">Laden...</div>
+            
+            <div class="card centered">
+                <div id="clock">00:00</div>
+                <div id="date">Laden...</div>
             </div>
 
-            <div class="card" id="smart-plug">
-                <h2>Stekker Status</h2>
-                <div id="plug-icon">🔌</div>
-                <div id="plug-text" style="font-weight: bold; text-align: center;">SYNC...</div>
-            </div>
-
-            <div class="card">
+            <div class="card centered">
                 <h2>Live Energie</h2>
-                <div id="power" style="font-size: 1.5rem; font-weight: bold; text-align: center; margin: 10px 0;">-- W</div>
-                <canvas id="energyChart" style="max-height: 50px;"></canvas>
+                <div id="power" style="font-size: 2.2rem; font-weight: bold; margin: 10px 0; color: #f8fafc;">-- W</div>
+                <canvas id="energyChart" style="max-height: 60px; width: 100%;"></canvas>
             </div>
 
-            <div class="card" style="padding:0;"><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ58ZjxBHyHpjJzQaJ71bNZtU7_mNetnqUKW2_Wsvh2bxgmVd8gKgQZmInoSqdQdwZloLigifIZzZX5/pubembed?start=true&loop=true&delayms=15000"></iframe></div>
+            <div class="card" style="padding:0; grid-column: span 2;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ58ZjxBHyHpjJzQaJ71bNZtU7_mNetnqUKW2_Wsvh2bxgmVd8gKgQZmInoSqdQdwZloLigifIZzZX5/pubembed?start=true&loop=true&delayms=15000"></iframe>
+            </div>
+
         </div>
     </div>
 
 <script>
+    // Klok Functie
     function updateClock() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString('nl-NL', {hour: '2-digit', minute:'2-digit'});
-        document.getElementById('date').innerText = now.toLocaleDateString('nl-NL', {weekday: 'long', day: 'numeric', month: 'short'});
+        document.getElementById('date').innerText = now.toLocaleDateString('nl-NL', {weekday: 'long', day: 'numeric', month: 'long'});
     }
-    setInterval(updateClock, 1000); updateClock();
+    setInterval(updateClock, 1000); 
+    updateClock();
 
-    async function fetchPlug() {
-        try {
-            const res = await fetch('https://eodofq6zznpuioz.m.pipedream.net');
-            const data = await res.json();
-            const isOn = data.status === 'on';
-            document.getElementById('smart-plug').className = isOn ? 'card status-on' : 'card';
-            document.getElementById('plug-text').innerText = isOn ? 'AAN' : 'UIT';
-            document.getElementById('plug-icon').innerText = isOn ? '💡' : '🔌';
-        } catch (e) { document.getElementById('plug-text').innerText = 'FOUT'; }
-    }
-    setInterval(fetchPlug, 5000); fetchPlug();
-
+    // Energie Grafiek Initialisatie
     const ctx = document.getElementById('energyChart').getContext('2d');
-    const energyChart = new Chart(ctx, { type: 'line', data: { labels: Array(20).fill(''), datasets: [{ data: [], borderColor: '#38bdf8', borderWidth: 2, pointRadius: 0, fill: false }] }, options: { scales: { x: { display: false }, y: { display: false } }, plugins: { legend: { display: false } } } });
+    const energyChart = new Chart(ctx, { 
+        type: 'line', 
+        data: { 
+            labels: Array(20).fill(''), 
+            datasets: [{ 
+                data: [], 
+                borderColor: '#38bdf8', 
+                borderWidth: 3, 
+                pointRadius: 0, 
+                fill: true,
+                backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                tension: 0.4
+            }] 
+        }, 
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { x: { display: false }, y: { display: false } }, 
+            plugins: { legend: { display: false } } 
+        } 
+    });
 
+    // Energie Data Ophalen
     async function updateEnergy() {
         try {
             const res = await fetch('http://192.168.86.25/api/v1/data');
             const data = await res.json();
-            document.getElementById('power').innerText = data.active_power_w + ' W';
+            document.getElementById('power').innerText = Math.round(data.active_power_w) + ' W';
+            
             energyChart.data.datasets[0].data.push(data.active_power_w);
             if(energyChart.data.datasets[0].data.length > 20) energyChart.data.datasets[0].data.shift();
             energyChart.update();
-        } catch(e) { console.log("Check Site Settings"); }
+        } catch(e) { 
+            console.log("Energie API niet bereikbaar"); 
+        }
     }
     setInterval(updateEnergy, 2000);
 </script>
